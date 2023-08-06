@@ -19,37 +19,42 @@ if __name__ == "__main__":
     
     while True:
         prices = []
-        try:
-            for route in ROUTES:
-                prices.append(
-                    {
-                        "provider": "snapp",
-                        "route": route["tag"],
-                        "price": snapp.get_route_price(
-                            route["source"],
-                            route["destination"],
-                            in_hurry=False),
-                         "in_hurry": False
-                    }
-                )
-        except Exception as e:
-            print(e)
+        for in_hurry in [False, True]:
+            try:
+                for route in ROUTES:
+                    prices.append(
+                        {
+                            "provider": "snapp",
+                            "route": route["tag"],
+                            "price": snapp.get_route_price(
+                                route["source"],
+                                route["destination"],
+                                in_hurry=in_hurry),
+                            "in_hurry": in_hurry
+                        }
+                    )
+                    sleep(1)
+            except Exception as e:
+                print(e)
 
-        try:
-            for route in ROUTES:
-                prices.append(
-                    {
-                        "provider": "tapsi",
-                        "route": route["tag"],
-                        "price": tapsi.get_route_price(
-                            route["source"],
-                            route["destination"],
-                            in_hurry=False),
-                        "in_hurry": False
-                    }
-                )
-        except Exception as e:
-            print(e)
+            try:
+                for route in ROUTES:
+                    prices.append(
+                        {
+                            "provider": "tapsi",
+                            "route": route["tag"],
+                            "price": tapsi.get_route_price(
+                                route["source"],
+                                route["destination"],
+                                in_hurry=in_hurry),
+                            "in_hurry": in_hurry
+                        }
+                    )
+                    sleep(1)
+            except Exception as e:
+                print(e)
+            
+            sleep(60)
 
         exporter.parse_prices_into_metrics(prices)
         exporter.export_metrics()
