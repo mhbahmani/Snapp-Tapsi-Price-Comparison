@@ -50,3 +50,6 @@ docker run --restart always -d --name=grafana-renderer --network host  grafana/g
 - gets the panel image from grafana
 - tweets it
 
+```bash
+python3 src/twitter_bot.py
+```
