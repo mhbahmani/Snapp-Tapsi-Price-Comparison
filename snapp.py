@@ -6,6 +6,7 @@ import http
 
 class Snapp:
     RIDE_REQUEST_API = "https://app.snapp.taxi/api/api-base/v2/passenger/newprice/s/6/0"
+    NUM_OF_RETRY = 3
 
     def __init__(self) -> None:
 
@@ -37,12 +38,25 @@ class Snapp:
             'tag': 0,
         }
 
-        response = requests.post(
-            Snapp.RIDE_REQUEST_API,
-            cookies=self.cookies,
-            headers=self.headers,
-            json=json_data,
-        )
+        # Send post request with timeout and retry if failed
+        response = None
+        for _ in range(Snapp.NUM_OF_RETRY):
+            try:
+                response = requests.post(
+                    Snapp.RIDE_REQUEST_API,
+                    cookies=self.cookies,
+                    headers=self.headers,
+                    json=json_data,
+                    timeout=5,
+                )
+                break
+            except Exception as e:
+                print(e)
+                print("Retrying...")
+                continue
+        else:
+            print("Failed to send request")
+            raise Exception()
 
         if response.status_code == http.HTTPStatus.UNAUTHORIZED:
             print("Unauthorized")
