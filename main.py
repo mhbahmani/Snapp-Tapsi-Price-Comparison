@@ -22,6 +22,7 @@ if __name__ == "__main__":
         for in_hurry in [False, True]:
             try:
                 for route in ROUTES:
+                    print("SNAPP", route["tag"], "IN_HURRY:", in_hurry)
                     prices.append(
                         {
                             "provider": "snapp",
@@ -39,6 +40,7 @@ if __name__ == "__main__":
 
             try:
                 for route in ROUTES:
+                    print("TAPSI", route["tag"], "IN_HURRY:", in_hurry)
                     prices.append(
                         {
                             "provider": "tapsi",
@@ -54,8 +56,6 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
             
-            sleep(60)
-
         exporter.parse_prices_into_metrics(prices)
         exporter.export_metrics()
         print("done")
