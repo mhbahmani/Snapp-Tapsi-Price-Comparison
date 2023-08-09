@@ -19,23 +19,22 @@ class Grafana:
 
         self.TOKEN = os.getenv("GRAFANA_TOKEN")
 
-    def download_panel_image(self):
+    def download_panel_image(self, output_file_path: str):
         request = requests.get(
             url=f"https://{self.host}:{self.port}/render/d-solo/"
                 f"{self.DASHBOARD_UID}?from={self.from_date}&to={self.to_date}"
-                f"&orgId={self.org_id}&panelId={self.PANEL_ID}"
+                f"&orgId={self.ORG_ID}&panelId={self.PANEL_ID}"
                 f"&width={self.WIDTH}&height={self.HEIGHT}"
                 f"&tz=Asia/Tehran",
             headers={"Authorization": f"Bearer {self.TOKEN}"},
             stream=True
         )
 
-        file_path = f"./panel/Average-panel-{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.png"
         print(f"Request status code: {request.status_code}")
         if request.status_code == 200:
-            print(f"Start saving result to file: {file_path}")
+            print(f"Start saving result to file: {output_file_path}")
 
-            with open(file_path, 'wb') as image_file:
+            with open(output_file_path, 'wb') as image_file:
                 request.raw.decode_content = True
                 shutil.copyfileobj(request.raw, image_file)
 
