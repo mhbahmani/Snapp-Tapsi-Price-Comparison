@@ -14,4 +14,6 @@ class Exporter:
         # Parse data into self.metrics
         self.metrics = []
         for price in prices:
-            self.metrics.append("price{" + ", ".join([f"{key}=\"{price[key]}\"" for key in price]) + "} " + str(price["price"]))
+            value = price["price"]
+            del(price["price"])
+            self.metrics.append("price{" + ", ".join([f"{key}=\"{price[key]}\"" for key in price]) + "} " + str(value))
