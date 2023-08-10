@@ -43,7 +43,7 @@ docker run  --network host -d --rm -v prom_data:/prometheus  -v /path/to/project
 
 **RUN:**
 ```bash
-ocker run --restart always --env-file /path/to/project/.env -d --name=grafana --network host -v grafana:/var/lib/grafana grafana/grafana
+docker run --restart always --env-file /path/to/project/.env -d --name=grafana --network host -v grafana:/var/lib/grafana grafana/grafana
 ```
 
 ### Grafana Image Renderer
@@ -62,5 +62,10 @@ docker run --restart always -d --name=grafana-renderer --network host  grafana/g
 
 ```bash
 mkdir panels
+# Set environment variables
+cp .env.sample .env
+# Set twitter headers and coockies
+cp configs/twitter.json.sample configs/twitter.json
+
 python3 price_reporter.py
 ```
