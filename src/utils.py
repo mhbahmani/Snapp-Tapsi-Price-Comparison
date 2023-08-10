@@ -22,3 +22,8 @@ def load_routes():
 
     print(f"Loaded {len(routes)} routes")
     return routes
+
+def load_provider_headers_and_cookies(file_path):
+    with open(file_path, "r") as f:
+        config = json.load(f)
+    return config["headers"], config["cookies"]

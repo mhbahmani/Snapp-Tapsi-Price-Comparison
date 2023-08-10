@@ -1,17 +1,18 @@
 from src.classes import Node
+from src.utils import load_provider_headers_and_cookies
 
 import requests
 import http
 
 
 class Snapp:
+    CONFIG_FILE_PATH = "./configs/snapp.json"
     RIDE_REQUEST_API = "https://app.snapp.taxi/api/api-base/v2/passenger/newprice/s/6/0"
     NUM_OF_RETRY = 3
 
     def __init__(self) -> None:
+        self.headers, self.cookies = load_provider_headers_and_cookies(Snapp.CONFIG_FILE_PATH)
 
-
-            
     def call_ride_request_api(self, source: Node, destination: Node, hurry_flag: bool = False) -> dict:
         json_data = {
             'points': [

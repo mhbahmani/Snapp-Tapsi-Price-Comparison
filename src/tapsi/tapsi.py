@@ -1,17 +1,18 @@
 from src.classes import Node
+from src.utils import load_provider_headers_and_cookies
 
 import requests
 import http
 
 
 class Tapsi:
+    CONFIG_FILE_PATH = "./configs/tapsi.json"
     RIDE_REQUEST_API = "https://api.tapsi.cab/api/v2.4/ride/preview"
     REFRESH_ACCESS_TOKEN_API = "https://api.tapsi.cab/api/v2/user/accessToken/web"
 
     def __init__(self) -> None:
+        self.headers, self.cookies = load_provider_headers_and_cookies(Tapsi.CONFIG_FILE_PATH)
 
-
-    
     def call_ride_request_api(self, source: Node, destination: Node) -> dict:
         json_data = {
             'origin': {
