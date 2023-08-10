@@ -34,7 +34,8 @@ def report_average_panel_image():
 
 report_average_panel_image()
 
-schedule.every().day.at("22:00").do(report_average_panel_image)
+# +03:30
+schedule.every().day.at("17:30").do(report_average_panel_image)
 
 
 while True:
