@@ -2,3 +2,5 @@ prometheus_client
 requests
 schedule==1.1.0
 jdatetime
+tweepy
+python-decouple
