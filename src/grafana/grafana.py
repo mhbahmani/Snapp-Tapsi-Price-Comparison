@@ -1,13 +1,13 @@
+from decouple import config
 from datetime import datetime
 
 import requests
 import shutil
-import os
 
 
 class Grafana:
     def __init__(self) -> None:
-        self.port = os.getenv("GRAFANA_PORT", "443")
+        self.port = config("GRAFANA_PORT", "443")
 
         self.DASHBOARD_UID = "d90a5e73-63d1-43d9-9f81-e776ba7e0c31"
         self.PANEL_ID = 3
@@ -17,7 +17,7 @@ class Grafana:
         self.WIDTH = 1500
         self.HEIGHT = 600
 
-        self.TOKEN = os.getenv("GRAFANA_TOKEN")
+        self.TOKEN = config("GRAFANA_TOKEN")
 
     def download_panel_image(self, output_file_path: str):
         request = requests.get(

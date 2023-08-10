@@ -19,6 +19,8 @@ def tweet_average_panel_image():
 
     twitter.send_tweet(tweet_text, tweet_media)
 
+# tweet_average_panel_image()
+
 schedule.every().day.at("22:00").do(tweet_average_panel_image)
 
 
