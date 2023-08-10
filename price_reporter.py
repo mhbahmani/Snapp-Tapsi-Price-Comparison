@@ -12,7 +12,8 @@ panels = [
     {
         "panel_id": 2,
         "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
-        "message": "میانگین قیمت اسنپ و تپسی در ۲۴ ساعت گذشته {}"
+        "message": "میانگین قیمت اسنپ و تپسی در ۲۴ ساعت گذشته {}",
+        "description": "Average panel"
     },
 ]
 
