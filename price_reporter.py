@@ -1,4 +1,4 @@
-from src.twitter import Twitter
+from src.twitter_handler import Twitter
 from src.grafana import Grafana
 from src.telegram_handler import Telegram
 
