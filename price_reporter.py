@@ -22,6 +22,12 @@ panels = [
         "description": "Average panel (in hurry)"
     },
     {
+        "panel_id": 44,
+        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+        "message": "میانگین اختلاف قیمت حالت عادی و حالت عجله دارم",
+        "description": "In Hurry and Normal Price Diff Average"
+    },
+    {
         "panel_id": 54,
         "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
         "message": "بیش‌ترین و کم‌ترین اختلاف قیمت حالت عجله دارم و عجله ندارم در بین تمامی مسیرها ",
