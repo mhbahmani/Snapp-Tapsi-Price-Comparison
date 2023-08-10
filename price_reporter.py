@@ -53,7 +53,7 @@ def report_average_panel_image():
     telegram = Telegram()
     grafana = Grafana()
 
-    telegram.send_message(f"گزارش قیمت‌ها در ۲۴ ساعت گذشته {jdatetime.date.today()}")
+    telegram.send_message(f"📊🚖📈 گزارش قیمت‌ها در ۲۴ ساعت گذشته \n{jdatetime.date.today().strftime('%Y-%m-%d')}")
 
     for panel in panels:
         panel_image_file_path = generate_today_panel_image_file_name(panel["panel_id"])
@@ -64,6 +64,8 @@ def report_average_panel_image():
         # twitter.send_tweet(panel["message"], medias)
         telegram.send_report(panel["message"], medias)
         time.sleep(10)
+
+    print("////////////// Report has been sent //////////////")
 
 # report_average_panel_image()
 
