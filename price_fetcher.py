@@ -1,4 +1,3 @@
-from src.static_data import *
 from src.snapp import Snapp
 from src.tapsi import Tapsi
 from src.metrics_handler import MetricsHandler
