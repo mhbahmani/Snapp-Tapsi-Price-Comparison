@@ -1,0 +1,9 @@
+{
+    "cookies": {
+        // Cookies
+    },
+    "headers" : {
+        "authorization": "Bearer TOKEN"
+        // other headers
+    }
+}
