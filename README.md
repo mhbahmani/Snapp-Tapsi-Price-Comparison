@@ -1,5 +1,9 @@
 # Snapp/Tapsi price comparison
+This repository is a project that enables you to fetch real-time prices from the Snapp and Tapsi ride-hailing services. It provides regular reports on Twitter and Telegram. Additionally, the repository includes configurations to create charts based on the collected price data, allowing for easy visualization and analysis using prometheus and grafana.
 
+Stay informed about the Snapp and Tapsi prices and gain insights with the handy reporting and charting functionality provided by this project.
+
+📊🚖📈
 ## Components:
 
 ### Price Fetcher
