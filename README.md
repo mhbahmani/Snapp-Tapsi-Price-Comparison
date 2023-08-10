@@ -8,7 +8,7 @@
 
 **RUN:**
 ```bash
-python3 src/price_fetcher.py
+SCRAPE_INTERVAL=300 python3 src/price_fetcher.py
 ```
 
 ### Exporter
@@ -26,7 +26,7 @@ flask run --host 0.0.0.0 --port 5000
 
 **RUN:**
 ```bash
-docker run  --network host -d --rm -v prom_data:/prometheus  -v $PWD/prometheus.yml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
+docker run  --network host -d --rm -v prom_data:/prometheus  -v /path/to/project/configs/prometheus.yml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
 ```
 
 ### Grafana
@@ -35,7 +35,7 @@ docker run  --network host -d --rm -v prom_data:/prometheus  -v $PWD/prometheus.
 
 **RUN:**
 ```bash
-ocker run --restart always --env-file /home/ubuntu/projects/price_com/.env -d --name=grafana --network host -v grafana:/var/lib/grafana grafana/grafana
+ocker run --restart always --env-file /path/to/project/.env -d --name=grafana --network host -v grafana:/var/lib/grafana grafana/grafana
 ```
 
 ### Grafana Image Renderer
