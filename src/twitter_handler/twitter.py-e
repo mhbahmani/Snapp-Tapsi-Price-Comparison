@@ -1,7 +1,8 @@
-from decouple import config
 from requests_oauthlib import OAuth1Session
-
+from decouple import config
 from time import sleep
+
+from src.utils import load_provider_headers_and_cookies
 
 import tweepy
 import requests
@@ -9,6 +10,8 @@ import os
 
 
 class Twitter:
+    CONFIG_JSON_FILE_PATH = "./configs/twitter.json"
+
     def __init__(self) -> None:
         self.twitter_auth_keys = {
             "consumer_key"        : config("TWITTER_CONSUMER_KEY"),
@@ -18,6 +21,8 @@ class Twitter:
         }
         # self.get_bot_token()
         # self.bot_api.update_status(status="Hello World Final")
+
+        self.headers, self.cookies = load_provider_headers_and_cookies(self.CONFIG_JSON_FILE_PATH)
 
     def send_tweet(self, text: str, medias: list) -> None:
 
@@ -42,32 +47,6 @@ class Twitter:
                 })
 
         # api.update_status(status=text, media_ids=media_ids)
-
-        # Make the request
-        # oauth = OAuth1Session(
-        #     self.twitter_auth_keys['consumer_key'],
-        #     client_secret=self.twitter_auth_keys['consumer_secret'],
-        #     resource_owner_key=self.twitter_auth_keys['access_token'],
-        #     resource_owner_secret=self.twitter_auth_keys['access_token_secret']
-        # )
-
-        # # Making the request
-        # response = oauth.post(
-        #     "https://api.twitter.com/2/tweets",
-        #     json={
-        #         "text": text,
-        #     },
-        # )
-
-        # if response.status_code != 201:
-        #     raise Exception(
-        #         "Request returned an error: {} {}".format(response.status_code, response.text)
-        #     )
-
-        # print("Response code: {}".format(response.status_code))
-
-
-
 
         json_data = {
             'variables': {
@@ -104,8 +83,8 @@ class Twitter:
 
         response = requests.post(
             'https://twitter.com/i/api/graphql/SoVnbfCycZ7fERGCwpZkYA/CreateTweet',
-            cookies=cookies,
-            headers=headers,
+            cookies=self.cookies,
+            headers=self.headers,
             json=json_data,
         )
 
@@ -125,7 +104,7 @@ class Twitter:
                 config("TWITTER_CONSUMER_SECRET"),
                 config("TWITTER_ACCESS_TOKEN"),
                 config("TWITTER_ACCESS_TOKEN_SECRET"),
-                callback="http://51.89.107.199:5000/callback"
+                callback=config("TWITTER_CALLBACK")
             )
             print(oauth1_user_handler.get_authorization_url())
             # check if tokens file is exists
@@ -148,7 +127,7 @@ class Twitter:
 
             new_oauth1_user_handler = tweepy.OAuth1UserHandler(
                 request_token, request_secret,
-                callback="http://51.89.107.199:5000/callback"
+                callback=config("TWITTER_CALLBACK")
             )
             new_oauth1_user_handler.request_token = {
                 "oauth_token": oauth_token,
