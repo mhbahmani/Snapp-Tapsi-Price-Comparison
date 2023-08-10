@@ -3,7 +3,7 @@ This repository is a project that enables you to fetch real-time prices from the
 
 Stay informed about the Snapp and Tapsi prices and gain insights with the handy reporting and charting functionality provided by this project.
 
-📊🚖📈
+📊🚖📈 Some Reports around the prices are available on [Telegram](https://t.me/snaptapsicomparison).
 ## Components:
 
 ### Price Fetcher
