@@ -178,3 +178,5 @@ pyrightconfig.json
 *prices.txt*
 *panels*
 configs/routes.json
+configs/snapp.json
+configs/tapsi.json
