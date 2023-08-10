@@ -8,6 +8,9 @@
 
 **RUN:**
 ```bash
+cp configs/routes.json.sample configs/routes.json
+# Add your routes to configs/routes.json
+
 SCRAPE_INTERVAL=300 python3 src/price_fetcher.py
 ```
 
@@ -53,5 +56,6 @@ docker run --restart always -d --name=grafana-renderer --network host  grafana/g
     * Twitter
 
 ```bash
+mkdir panels
 python3 price_reporter.py
 ```
