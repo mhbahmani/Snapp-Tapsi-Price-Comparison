@@ -2,6 +2,7 @@ from src.static_data import *
 from src.snapp import Snapp
 from src.tapsi import Tapsi
 from src.metrics_handler import MetricsHandler
+from src.utils import load_routes
 
 from time import sleep
 
@@ -14,14 +15,16 @@ snapp = Snapp()
 tapsi = Tapsi()
 exporter = MetricsHandler("./prices.txt")
 
+
 if __name__ == "__main__":
     print(f"Scrape Interval: {SCRAPE_INTERVAL}")
-    
+    routes = load_routes()
+
     while True:
         prices = []
         for in_hurry in [False, True]:
             try:
-                for route in ROUTES:
+                for route in routes:
                     print("SNAPP", route["tag"], "IN_HURRY:", in_hurry)
                     prices.append(
                         {
@@ -39,7 +42,7 @@ if __name__ == "__main__":
                 print(e)
 
             try:
-                for route in ROUTES:
+                for route in routes:
                     print("TAPSI", route["tag"], "IN_HURRY:", in_hurry)
                     prices.append(
                         {
