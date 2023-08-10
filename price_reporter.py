@@ -57,6 +57,7 @@ def report_average_panel_image():
 
         # twitter.send_tweet(panel["message"], medias)
         telegram.send_report(panel["message"], medias)
+        time.sleep(10)
 
 # report_average_panel_image()
 
