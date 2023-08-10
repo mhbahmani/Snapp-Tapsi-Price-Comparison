@@ -8,8 +8,13 @@
 
 **RUN:**
 ```bash
-cp configs/routes.json.sample configs/routes.json
 # Add your routes to configs/routes.json
+cp configs/routes.json.sample configs/routes.json
+
+# Set your snapp/tapsi headers and coockies
+# You can use browser inspector to get them
+cp configs/snapp.json.sample configs/snapp.json
+cp configs/tapsi.json.sample configs/tapsi.json
 
 SCRAPE_INTERVAL=300 python3 src/price_fetcher.py
 ```
