@@ -46,10 +46,12 @@ ocker run --restart always --env-file /path/to/project/.env -d --name=grafana --
 docker run --restart always -d --name=grafana-renderer --network host  grafana/grafana-image-renderer:latest
 ```
 
-### Twitter Bot
-- gets the panel image from grafana
-- tweets it
+### Price Reporter
+- gets the panel images from grafana
+- post them on social media
+    * Telegram
+    * Twitter
 
 ```bash
-python3 src/twitter_bot.py
+python3 price_reporter.py
 ```
