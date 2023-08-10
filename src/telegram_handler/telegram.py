@@ -25,3 +25,10 @@ class Telegram:
             ],
         )
         print(f"Report has been sent at {datetime.datetime.now()}")
+    
+    def send_message(self, text: str):
+        self.bot.send_message(
+            chat_id=self.CHANNEL_ID,
+            text=text,
+        )
+        print(f"Message has been sent at {datetime.datetime.now()}")
