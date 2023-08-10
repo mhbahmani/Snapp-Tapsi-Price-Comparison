@@ -29,7 +29,7 @@ def report_average_panel_image():
         medias = [panel_image_file_path]
 
         # twitter.send_tweet(panel["message"].format(jdatetime.date.today()), medias)
-        # telegram.send_report(panel["message"].format(jdatetime.date.today()), medias)
+        telegram.send_report(panel["message"].format(jdatetime.date.today()), medias)
 
 report_average_panel_image()
 
