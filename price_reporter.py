@@ -70,6 +70,7 @@ def report_average_panel_image():
 # report_average_panel_image()
 
 # -03:30
+schedule.every().day.at("10:30").do(report_average_panel_image)
 schedule.every().day.at("16:30").do(report_average_panel_image)
 
 
