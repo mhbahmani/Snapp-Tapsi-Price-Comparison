@@ -1,6 +1,8 @@
 from src.classes import Node
 from src.utils import load_provider_headers_and_cookies
 
+from time import sleep
+
 import requests
 import http
 
@@ -9,6 +11,7 @@ class Tapsi:
     CONFIG_FILE_PATH = "./configs/tapsi.json"
     RIDE_REQUEST_API = "https://api.tapsi.cab/api/v2.4/ride/preview"
     REFRESH_ACCESS_TOKEN_API = "https://api.tapsi.cab/api/v2/user/accessToken/web"
+    NUM_OF_RETRY = 3
 
     def __init__(self) -> None:
         self.headers, self.cookies = load_provider_headers_and_cookies(Tapsi.CONFIG_FILE_PATH)
@@ -31,7 +34,13 @@ class Tapsi:
             'initiatedVia': 'WEB',
         }
 
-        response = requests.post(Tapsi.RIDE_REQUEST_API, cookies=self.cookies, headers=self.headers, json=json_data)
+        for _ in range(Tapsi.NUM_OF_RETRY):
+            try:
+                response = requests.post(Tapsi.RIDE_REQUEST_API, cookies=self.cookies, headers=self.headers, json=json_data)
+                break
+            except requests.exceptions.ConnectTimeout:
+                print("Timeout, Waiting...")
+                sleep(10 * 60)
 
         if response.status_code == http.HTTPStatus.UNAUTHORIZED:
             print("Unauthorized")
