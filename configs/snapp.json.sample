@@ -6,4 +6,13 @@
         "authorization": "Bearer TOKEN"
         // other headers
     }
+    "refresh_token": "",
+    "access_token": "",
+    // auth_json_data is used to refresh the token
+    "auth_json_data": {
+        "grant_type": "refresh_token",
+        "client_id": "",
+        "client_secret": "",
+        "device_id": ""
+    }
 }
