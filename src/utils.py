@@ -23,7 +23,21 @@ def load_routes():
     print(f"Loaded {len(routes)} routes")
     return routes
 
-def load_provider_headers_and_cookies(file_path):
+def load_provider_headers_and_cookies(file_path, keys=["headers", "cookies"]):
     with open(file_path, "r") as f:
         config = json.load(f)
-    return config["headers"], config["cookies"]
+    return [config[key] for key in keys]
+
+def update_config_file(file_path, new_key_valeus: dict):
+    with open(file_path, "r") as f:
+        config = json.load(f)
+    
+    try:
+        for key, value in new_key_valeus.items():
+            config[key] = value
+    except KeyError:
+        print("Invalid key")
+        return
+    
+    with open(file_path, "w") as f:
+        json.dump(config, f, indent=4)
