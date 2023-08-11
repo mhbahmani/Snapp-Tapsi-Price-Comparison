@@ -7,6 +7,7 @@ import shutil
 
 class Grafana:
     def __init__(self) -> None:
+        self.host = config("GRAFANA_HOST")
         self.port = config("GRAFANA_PORT", "443")
 
         self.from_date = "now-24h"
