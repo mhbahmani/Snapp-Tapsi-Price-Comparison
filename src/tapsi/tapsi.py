@@ -40,7 +40,7 @@ class Tapsi:
                 break
             except requests.exceptions.ConnectTimeout:
                 print("Timeout, Waiting...")
-                sleep(10 * 60)
+                sleep(10)
 
         if response.status_code == http.HTTPStatus.UNAUTHORIZED:
             print("Unauthorized")
