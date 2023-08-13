@@ -1,11 +1,11 @@
-from requests_oauthlib import OAuth1Session
+# from requests_oauthlib import OAuth1Session
 from decouple import config
 from time import sleep
 
 from src.utils import load_provider_headers_and_cookies
 
 import tweepy
-import requests
+# import requests
 import os
 
 
@@ -19,8 +19,7 @@ class Twitter:
             "access_token"        : config("TWITTER_ACCESS_TOKEN"),
             "access_token_secret" : config("TWITTER_ACCESS_TOKEN_SECRET")
         }
-        # self.get_bot_token()
-        # self.bot_api.update_status(status="Hello World Final")
+        self.get_bot_token()
 
         self.headers, self.cookies = load_provider_headers_and_cookies(self.CONFIG_JSON_FILE_PATH)
 
@@ -38,58 +37,22 @@ class Twitter:
     
         # Upload image
         media_entities = []
+        media_ids = []
         for media_path in medias:
             uploaded_media = api.media_upload(media_path)
+            media_ids.append(uploaded_media.media_id)
             media_entities.append(
                 {
                     'media_id': str(uploaded_media.media_id),
                     'tagged_users': [],
                 })
 
-        # api.update_status(status=text, media_ids=media_ids)
-
-        json_data = {
-            'variables': {
-                'tweet_text': text,
-                'dark_request': False,
-                'media': {
-                    'media_entities': media_entities,
-                    'possibly_sensitive': False,
-                },
-                'semantic_annotation_ids': [],
-            },
-            'features': {
-                'tweetypie_unmention_optimization_enabled': True,
-                'responsive_web_edit_tweet_api_enabled': True,
-                'graphql_is_translatable_rweb_tweet_is_translatable_enabled': True,
-                'view_counts_everywhere_api_enabled': True,
-                'longform_notetweets_consumption_enabled': True,
-                'responsive_web_twitter_article_tweet_consumption_enabled': False,
-                'tweet_awards_web_tipping_enabled': False,
-                'longform_notetweets_rich_text_read_enabled': True,
-                'longform_notetweets_inline_media_enabled': True,
-                'responsive_web_graphql_exclude_directive_enabled': True,
-                'verified_phone_label_enabled': False,
-                'freedom_of_speech_not_reach_fetch_enabled': True,
-                'standardized_nudges_misinfo': True,
-                'tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled': True,
-                'responsive_web_media_download_video_enabled': False,
-                'responsive_web_graphql_skip_user_profile_image_extensions_enabled': False,
-                'responsive_web_graphql_timeline_navigation_enabled': True,
-                'responsive_web_enhance_cards_enabled': False,
-            },
-            'queryId': 'SoVnbfCycZ7fERGCwpZkYA',
-        }
-
-        response = requests.post(
-            'https://twitter.com/i/api/graphql/SoVnbfCycZ7fERGCwpZkYA/CreateTweet',
-            cookies=self.cookies,
-            headers=self.headers,
-            json=json_data,
-        )
-
+        self.client.create_tweet(text=text, media_ids=media_ids)
 
     def get_bot_token(self):
+        # Getting user access token in order to 
+        # tweet on behalf of that user
+
         # if token file exists, load tokens from it
         tokens_file_path = "bot_tokens.txt"
         tokens = None
@@ -140,11 +103,12 @@ class Twitter:
             )
 
         self.save_bot_tokens(access_token, access_token_secret)
-        auth = tweepy.OAuth1UserHandler(
-            config("TWITTER_CONSUMER_KEY"), config("TWITTER_CONSUMER_SECRET"),
-            access_token, access_token_secret
+        self.client = tweepy.Client(
+            consumer_key=config("TWITTER_CONSUMER_KEY"),
+            consumer_secret=config("TWITTER_CONSUMER_SECRET"),
+            access_token=access_token,
+            access_token_secret=access_token_secret
         )
-        self.bot_api = tweepy.API(auth)
 
     def save_bot_tokens(self, access_token: str, access_token_secret: str):
         tokens_file_path = "bot_tokens.txt"
