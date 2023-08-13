@@ -45,6 +45,12 @@ panels = [
         "message": "قیمت Snapp در مسیرهایی که تا به حال نرفته‌ام (حالت عادی)",
         "description": "Not Gone Routes snapp normal"
     },
+    {
+        "panel_id": 51,
+        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+        "message": "مشتق میانگین قیمت مسیر‌هایی که تا به حال نرفته‌ام در ۲۴ ساعت گذشته",
+        "description": "Not Gone Routes Deviation"
+    },
 ]
 
 
