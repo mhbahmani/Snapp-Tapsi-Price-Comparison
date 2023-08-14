@@ -48,9 +48,27 @@ panels = [
     {
         "panel_id": 51,
         "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
-        "message": "مشتق میانگین قیمت مسیر‌هایی که تا به حال نرفته‌ام در ۲۴ ساعت گذشته",
-        "description": "Not Gone Routes Deviation"
+        "message": "مشتق میانگین قیمت تپسی در مسیر‌هایی که تا به حال نرفته‌ام در ۲۴ ساعت گذشته",
+        "description": "Tapsi Not Gone Routes Deviation 24h"
     },
+    {
+        "panel_id": 56,
+        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+        "message": "مشتق میانگین قیمت تپسی در مسیر‌هایی که تا به حال نرفته‌ام در هفت روز گذشته",
+        "description": "Tapsi Not Gone Routes Deviation 7d"
+    },
+    {
+        "panel_id": 42,
+        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+        "message": "مشتق میانگین قیمت اسنپ در مسیر‌هایی که تا به حال نرفته‌ام در ۲۴ ساعت گذشته",
+        "description": "Snapp Not Gone Routes Deviation 24h"
+    },
+    {
+        "panel_id": 57,
+        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+        "message": "مشتق میانگین قیمت اسنپ در مسیر‌هایی که تا به حال نرفته‌ام در هفت روز گذشته",
+        "description": "Snapp Not Gone Routes Deviation 7d"
+    }
 ]
 
 
