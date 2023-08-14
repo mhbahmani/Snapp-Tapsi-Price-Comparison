@@ -37,6 +37,7 @@ class Tapsi:
         for _ in range(Tapsi.NUM_OF_RETRY):
             try:
                 response = requests.post(Tapsi.RIDE_REQUEST_API, cookies=self.cookies, headers=self.headers, json=json_data, timeout=5)
+                # TODO: Handle 504 response status code
                 break
             except requests.exceptions.ConnectTimeout:
                 print("Timeout, Waiting...")
