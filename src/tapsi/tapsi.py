@@ -16,7 +16,7 @@ class Tapsi:
     def __init__(self) -> None:
         self.headers, self.cookies = load_provider_headers_and_cookies(Tapsi.CONFIG_FILE_PATH)
 
-    def call_ride_request_api(self, source: Node, destination: Node) -> dict:
+    def call_ride_request_api(self, source: Node, destination: Node, is_retry: bool = False) -> dict:
         json_data = {
             'origin': {
                 'latitude': float(source.lat),
@@ -33,7 +33,8 @@ class Tapsi:
             'gateway': 'CAB',
             'initiatedVia': 'WEB',
         }
-
+        
+        response = None
         for _ in range(Tapsi.NUM_OF_RETRY):
             try:
                 response = requests.post(Tapsi.RIDE_REQUEST_API, cookies=self.cookies, headers=self.headers, json=json_data, timeout=5)
@@ -42,24 +43,33 @@ class Tapsi:
             except requests.exceptions.ConnectTimeout:
                 print("Timeout, Waiting...")
                 sleep(10)
+            except requests.exceptions.ConnectionError:
+                print("Connection Error, we probably got banned")
+                return {}
 
-        if response.status_code == http.HTTPStatus.UNAUTHORIZED:
+        if not is_retry and response.status_code == http.HTTPStatus.UNAUTHORIZED:
             print("Unauthorized")
             print("Update access token")
             self.refresh_access_token()
             print("Retry")
-            response = requests.post(Tapsi.RIDE_REQUEST_API, cookies=self.cookies, headers=self.headers, json=json_data)
+            self.call_ride_request_api(source, destination, is_retry=True)
+        if is_retry and response.status_code == http.HTTPStatus.UNAUTHORIZED:
+            print("Refreshed access token, but still unauthorized")
+            return {}
         if response.status_code != http.HTTPStatus.OK:
             print(response.status_code)
             raise Exception()
         
-        return response.json()
+        return response.json() if response else {}
 
 
     def get_route_price(self, source: Node, destination: Node, in_hurry: bool = False) -> int:
         desired_category = "STANDARD" if not in_hurry else "PRIORITY"
         
         response = self.call_ride_request_api(source, destination)
+
+        if not response.get("data", {}).get("categories", []):
+            raise Exception("API call failed")
 
         for category in response.get("data", {}).get("categories", []):
             if category.get("key") == "NORMAL":

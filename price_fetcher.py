@@ -37,10 +37,7 @@ if __name__ == "__main__":
                         }
                     )
                     sleep(1)
-            except Exception as e:
-                print(e)
 
-            try:
                 for route in routes:
                     print("TAPSI", route["tag"], "IN_HURRY:", in_hurry)
                     prices.append(
@@ -57,6 +54,9 @@ if __name__ == "__main__":
                     sleep(1)
             except Exception as e:
                 print(e)
+                print("Use backup server")
+                sleep(SCRAPE_INTERVAL)
+                continue
             
         exporter.parse_prices_into_metrics(prices)
         exporter.export_metrics()
