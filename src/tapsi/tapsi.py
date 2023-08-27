@@ -38,7 +38,6 @@ class Tapsi:
         for _ in range(Tapsi.NUM_OF_RETRY):
             try:
                 response = requests.post(Tapsi.RIDE_REQUEST_API, cookies=self.cookies, headers=self.headers, json=json_data, timeout=5)
-                # TODO: Handle 504 response status code
                 break
             except requests.exceptions.ConnectTimeout:
                 print("Timeout, Waiting...")
@@ -52,7 +51,7 @@ class Tapsi:
             print("Update access token")
             self.refresh_access_token()
             print("Retry")
-            self.call_ride_request_api(source, destination, is_retry=True)
+            return self.call_ride_request_api(source, destination, is_retry=True)
         if is_retry and response.status_code == http.HTTPStatus.UNAUTHORIZED:
             print("Refreshed access token, but still unauthorized")
             return {}
