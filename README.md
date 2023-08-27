@@ -20,7 +20,24 @@ cp configs/routes.json.sample configs/routes.json
 cp configs/snapp.json.sample configs/snapp.json
 cp configs/tapsi.json.sample configs/tapsi.json
 
-SCRAPE_INTERVAL=300 python3 src/price_fetcher.py
+PYTHONUNBUFFERED=0 SCRAPE_INTERVAL=300 python3 price_fetcher.py | tee -a price_fetcher.logs
+```
+
+### Tapsi Load Balancer
+In order to bypass tapsi api waf, we need to change the domain ip on each request. `tapsi_dns_load_balancer.sh` does this for us. `tapsi_dns_load_balancer.sh` writes the domain ip to `/etc/hosts` on each timeout log.
+
+```bash
+# Open a new terminal
+bash tapsi_dns_load_balancer.sh
+```
+
+### Exception Handler
+In case of getting banned by tapsi api waf or any other error, a "Use backup server" message will be logged by `price_fetcher.py`.  
+`get_prices_from_backup_server.sh` runs the price_fetcher on a backup server and downloads the prices file from it.
+
+```bash
+# Open a new terminal
+bash get_prices_from_backup_server.sh
 ```
 
 ### Exporter
