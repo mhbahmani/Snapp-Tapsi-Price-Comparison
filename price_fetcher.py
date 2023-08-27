@@ -68,6 +68,7 @@ if __name__ == "__main__":
     if config("RUN_ONCE", False, cast=bool):
         print("RUN_ONCE is set to True, running once")
         fetch_prices(routes)
+        exit(0)
 
     print(f"Scrape Interval: {SCRAPE_INTERVAL}")
 
