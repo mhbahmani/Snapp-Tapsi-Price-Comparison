@@ -11,7 +11,7 @@ do
 	if [[ "$line" == *"$target_line"* ]]; then
 		echo "\"$line\" Fount. Performing price copy"
 
-		ssh -l root dgocean-1 "cd /root/projects/price_com/; PYTHONUNBUFFERED=0 SCRAPE_INTERVAL=600 python3 /root/projects/price_com/price_fetcher.py | tee -a /root/projects/price_com/price_fetcher.logs"
+		ssh -l root dgocean-1 "cd /root/projects/price_com/; RUN_ONCE=true PYTHONUNBUFFERED=0 SCRAPE_INTERVAL=600 python3 /root/projects/price_com/price_fetcher.py | tee -a /root/projects/price_com/price_fetcher.logs"
 		rsync -rP dgocean-1:/root/projects/price_com/prices.txt .
 	fi
 	sleep 1
