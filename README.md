@@ -23,6 +23,8 @@ cp configs/tapsi.json.sample configs/tapsi.json
 PYTHONUNBUFFERED=0 SCRAPE_INTERVAL=300 python3 price_fetcher.py | tee -a price_fetcher.logs
 ```
 
+You can set RUN_ONCE environment variable to `true` to run the price fetcher only once and bypass the while loop (default value is false).
+
 ### Tapsi Load Balancer
 In order to bypass tapsi api waf, we need to change the domain ip on each request. `tapsi_dns_load_balancer.sh` does this for us. `tapsi_dns_load_balancer.sh` writes the domain ip to `/etc/hosts` on each timeout log.
 
