@@ -54,7 +54,7 @@ class Twitter:
         # tweet on behalf of that user
 
         # if token file exists, load tokens from it
-        tokens_file_path = "bot_tokens.txt"
+        tokens_file_path = "./configs/bot_tokens.txt"
         tokens = None
         if os.path.exists(tokens_file_path):
             with open(tokens_file_path, "r") as f:
