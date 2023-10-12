@@ -5,6 +5,7 @@ from time import sleep
 
 import requests
 import http
+import json
 
 
 class Tapsi:
@@ -82,6 +83,7 @@ class Tapsi:
     def refresh_access_token(self):
         response = requests.get(Tapsi.REFRESH_ACCESS_TOKEN_API, cookies=self.cookies, headers=self.headers)
         self.cookies = self.retrieve_set_cookie_headers_from_response(response)
+        self.update_cookies_in_config_file()
 
     def retrieve_set_cookie_headers_from_response(self, response: requests.Response) -> dict:
         """
@@ -106,3 +108,10 @@ class Tapsi:
                     cookies["refreshToken"] = h[len("refreshToken="):]
 
         return cookies
+
+    def update_cookies_in_config_file(self):
+        with open(Tapsi.CONFIG_FILE_PATH, "r") as f:
+            config = json.load(f)
+            config["cookies"] = self.cookies
+        with open(Tapsi.CONFIG_FILE_PATH, "w") as f:
+            json.dump(config, f, indent=4, ensure_ascii=False)

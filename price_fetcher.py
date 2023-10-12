@@ -4,6 +4,7 @@ from src.metrics_handler import MetricsHandler
 from src.utils import load_routes
 
 from decouple import config 
+from jdatetime import datetime
 
 from time import sleep
 
@@ -73,6 +74,7 @@ if __name__ == "__main__":
     print(f"Scrape Interval: {SCRAPE_INTERVAL}")
 
     while True:
+        print(f"Fetching prices at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         fetch_prices(routes)
         sleep(SCRAPE_INTERVAL)
 
