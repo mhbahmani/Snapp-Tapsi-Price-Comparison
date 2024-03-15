@@ -79,6 +79,20 @@ class Tapsi:
                             int(service.get("prices")[0].get("passengerShare")) + \
                             int(service.get("prices")[0].get("discount"))
 
+    def get_route_price_with_discount(self, source: Node, destination: Node, in_hurry: bool = False) -> int:
+        desired_category = "STANDARD" if not in_hurry else "PRIORITY"
+        
+        response = self.call_ride_request_api(source, destination)
+
+        if not response.get("data", {}).get("categories", []):
+            raise Exception("API call failed")
+
+        for category in response.get("data", {}).get("categories", []):
+            if category.get("key") == "NORMAL":
+                for service in category.get("services"):
+                    if service.get("key") == desired_category:
+                        return \
+                             int(service.get("prices")[0].get("passengerShare"))
 
     def refresh_access_token(self):
         response = requests.get(Tapsi.REFRESH_ACCESS_TOKEN_API, cookies=self.cookies, headers=self.headers)
