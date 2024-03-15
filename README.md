@@ -49,7 +49,7 @@ bash get_prices_from_backup_server.sh
 **RUN:**
 ```bash
 cd src/exporter
-flask run --host 0.0.0.0 --port 5000
+FLASK_APP=src/exporter/app.py flask run --host 0.0.0.0 --port 5000
 ```
 
 ### Prometheus
