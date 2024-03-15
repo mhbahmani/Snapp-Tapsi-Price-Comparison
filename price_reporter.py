@@ -42,6 +42,24 @@ quick_report_pannels = [
         "message": "کم‌قیمت‌ترین مسیرها",
         "description": "Min Prices"
     },
+    {
+        "panel_id": 74,
+        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+        "message": "کم‌قیمت‌ترین مسیرها",
+        "description": "Min Prices"
+    },
+    {
+        "panel_id": 73,
+        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+        "message": "کم‌قیمت‌ترین مسیرها",
+        "description": "Min Prices"
+    },
+    {
+        "panel_id": 74,
+        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+        "message": "کم‌قیمت‌ترین مسیرها",
+        "description": "Min Prices"
+    },
 ]
 
 def report_panels(quick: bool = False):

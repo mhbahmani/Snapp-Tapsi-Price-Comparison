@@ -59,7 +59,7 @@ def fetch_prices(routes: list):
         # Get minimum price for different routes
         pattern = re.compile(r"uni.*tapsi.*")
         min_price_uni_tapsi_dict: dict = \
-            min(prices, key=lambda x: x["price"] if pattern.match(x["route"]) and x['provider'] == "tapsi" else 1000000000)
+            min(prices, key=lambda x: x["price"] if pattern.match(x["route"]) else 1000000000)
         min_price_uni_tapsi_dict = min_price_uni_tapsi_dict.copy()
         pattern = re.compile(r"home.*tapsi.*")
         min_price_home_tapsi_dict: dict = \
