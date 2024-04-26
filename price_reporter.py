@@ -27,39 +27,33 @@ daily_report_panels = [
         "message": "(در حالت عادی) قیمت تپسی در مسیر از خونه تا در تپسی و از خونه تا جلوی بیمارستان مدرس و از خونه تا سر کوچه ارغوان",
         "description": "Home-Tapsi (Tapsi)"
     },
-    {
-        "panel_id": 55,
-        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
-        "message": "ناهار دادن به کارمندان",
-        "description": "Lunch"
-    }
+    # {
+    #     "panel_id": 55,
+    #     "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
+    #     "message": "ناهار دادن به کارمندان",
+    #     "description": "Lunch"
+    # }
 ]
 
 quick_report_pannels = [
     {
-        "panel_id": 69,
+        "panel_id": 76,
         "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
-        "message": "کم‌قیمت‌ترین مسیرها",
+        "message": "ارزان‌ترین مسیر از خانه به تپسی",
         "description": "Min Prices"
     },
     {
-        "panel_id": 74,
+        "panel_id": 77,
         "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
-        "message": "کم‌قیمت‌ترین مسیرها",
+        "message": "ارزان‌ترین‌ از خانه به دانشگاه",
         "description": "Min Prices"
     },
     {
-        "panel_id": 73,
+        "panel_id": 78,
         "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
-        "message": "کم‌قیمت‌ترین مسیرها",
+        "message": "ارزان‌ترین مسیر از دانشگاه به تپسی",
         "description": "Min Prices"
-    },
-    {
-        "panel_id": 74,
-        "dashboard_id": "d90a5e73-63d1-43d9-9f81-e776ba7e0c31",
-        "message": "کم‌قیمت‌ترین مسیرها",
-        "description": "Min Prices"
-    },
+    }
 ]
 
 def report_panels(quick: bool = False):
@@ -68,15 +62,27 @@ def report_panels(quick: bool = False):
     grafana = Grafana()
 
     if quick:
-        telegram.send_message(f"🔔 گزارش لحظه‌ای \n{jdatetime.date.today().strftime('%Y-%m-%d')}")
+        telegram.send_message(f"🔔 گزارش لحظه‌ای \n{(jdatetime.datetime.now() + jdatetime.timedelta(hours=3, minutes=30)).strftime('%Y-%m-%d %H:%M:%S')}")
         panels = quick_report_pannels
+        from_date = "now-1m"
+        width = "1000"
+        height = "400"
     else:
         telegram.send_message(f"📊🚖📈 گزارش قیمت‌ها در ۲۴ ساعت گذشته \n{jdatetime.date.today().strftime('%Y-%m-%d')}")
         panels = daily_report_panels
+        from_date = "now-24h"
+        width = "1500"
+        height = "600"
     
     for panel in panels:
         panel_image_file_path = generate_today_panel_image_file_name(panel["panel_id"])
-        grafana.download_panel_image(output_file_path=panel_image_file_path, panel_id=panel["panel_id"], dashboard_id=panel["dashboard_id"])
+        grafana.download_panel_image(
+            output_file_path=panel_image_file_path,
+            panel_id=panel["panel_id"],
+            dashboard_id=panel["dashboard_id"],
+            width=width,
+            height=height,
+            from_date=from_date)
 
         medias = [panel_image_file_path]
 
@@ -84,9 +90,9 @@ def report_panels(quick: bool = False):
         telegram.send_report(panel["message"], medias)
         time.sleep(10)
 
-    print("////////////// Report has been sent //////////////")
+    print(f"////////////// {'Quick' if quick else 'Daily'} Report has been sent //////////////")
 
-report_panels()
+# report_panels()
 report_panels(quick=True)
 
 # -03:30
