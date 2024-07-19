@@ -57,7 +57,7 @@ FLASK_APP=src/exporter/app.py flask run --host 0.0.0.0 --port 5000
 
 **RUN:**
 ```bash
-docker run  --network host -d --rm -v prom_data:/prometheus  -v /path/to/project/configs/prometheus.yml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
+docker run  --network host -d --rm -v prom_data:/prometheus -v /path/to/project/configs/prometheus.yml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus --storage.tsdb.retention.time=40d --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus --web.console.libraries=/usr/share/prometheus/console_libraries --web.console.templates=/usr/share/prometheus/consoles
 ```
 
 ### Grafana
